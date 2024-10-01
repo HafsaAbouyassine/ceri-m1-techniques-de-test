@@ -1,0 +1,17 @@
+version: 2.1
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/openjdk:8
+workflows:
+  build-and-test-workflow:
+    jobs:
+      - build-and-test
+    filters:
+      branches:
+        only:
+          - master
+steps:
+  - checkout
+  - run: mvn clean package
+  - run: mvn test
