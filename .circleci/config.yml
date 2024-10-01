@@ -1,17 +1,25 @@
 version: 2.1
+
 jobs:
-  build-and-test:
+  build:
     docker:
-      - image: circleci/openjdk:8
+      - image: circleci/openjdk:8  # Vous pouvez changer la version du JDK si nécessaire
     steps:
-      - checkout
-      - run: mvn clean package
-      - run: mvn test
+      - checkout  https://github.com/HafsaAbouyassine/ceri-m1-techniques-de-test.git # Clone votre projet depuis GitHub
+
+      - run:
+          name: Install Maven
+          command: sudo apt-get install -y maven
+
+      - run:
+          name: Run Tests
+          command: mvn test  # Exécute vos tests unitaires
+
 workflows:
-  build-and-test-workflow:
+  version: 2
+  build_and_test:
     jobs:
-      - build-and-test
-    filters:
-      branches:
-        only:
-          - master
+      - build:
+          filters:
+            branches:
+              only: master  # Déclenche seulement sur la branche master
