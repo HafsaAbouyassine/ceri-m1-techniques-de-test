@@ -20,13 +20,15 @@ jobs:
           name: Generate Coverage Report
           command: mvn jacoco:report
 
-      # Job to upload coverage to Codecov
-      - upload-codecov:
+  # Job to upload coverage to Codecov
+  upload-codecov:
+    docker:
+      - image: cimg/openjdk:21.0
+    steps:
+      - checkout
       - run:
-                name: Upload Coverage to Codecov
-                command: bash <(curl -s https://codecov.io/bash) -t your-codecov-token
-
-
+          name: Upload Coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash) -t your-codecov-token
 
 workflows:
   upload-to-codecov:
