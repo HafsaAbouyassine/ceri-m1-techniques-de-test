@@ -21,6 +21,9 @@ jobs:
       - run:
           name: Generate JavaDoc
           command: mvn javadoc:javadoc
+      - run:
+          name: List JaCoCo Report Directory
+          command: ls -la target/site/jacoco
 
   docs-deploy:
     docker:
