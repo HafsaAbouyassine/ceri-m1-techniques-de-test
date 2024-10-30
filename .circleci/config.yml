@@ -17,7 +17,7 @@ jobs:
           command: mvn jacoco:report
       - codecov/upload:  # Utilise l'orbe Codecov pour uploader les résultats
           file: target/site/jacoco/jacoco.xml  # Spécifie le rapport JaCoCo généré
-          token: $CODECOV_TOKEN
+          token: CODECOV_TOKEN
       - run:
           name: Generate JavaDoc
           command: mvn javadoc:javadoc
