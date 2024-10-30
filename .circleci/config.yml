@@ -40,7 +40,7 @@ jobs:
             git config user.name "HafsaAbouyassine"
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:CmuXAAUOtBw24KObf1iu6KIBh0bTsO5iMyepBRflALg"  # Remplacez par votre fingerprint SSH
+            - "SHA256:CmuXAAUOtBw24KObf1iu6KIBh0bTsO5iMyepBRflALg"  # fingerprint SSH
       - run:
           name: Deploy Documentation to GitHub Pages
           command: gh-pages --dist target/site/apidocs/  # Déploie la JavaDoc générée
