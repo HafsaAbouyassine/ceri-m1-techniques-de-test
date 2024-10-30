@@ -4,60 +4,35 @@ orbs:
   codecov: codecov/codecov@4.0.1
 
 jobs:
-  build:
+  build-and-test:
     docker:
-      - image: cimg/openjdk:21.0  # Utilise l'image OpenJDK 17 pour la compilation et les tests
+      - image: cimg/openjdk:21.0
     steps:
-      - checkout  # Récupère le code source
+      - checkout
       - run:
-          name: Run Maven Tests
-          command: mvn clean test
+          name: Build Project
+          command: mvn -B -DskipTests clean package
+      - run:
+          name: Run Tests and Collect Coverage
+          command: mvn test
       - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
-      - codecov/upload:  # Utilise l'orbe Codecov pour uploader les résultats
-          file: target/site/jacoco/jacoco.xml  # Spécifie le rapport JaCoCo généré
-          token: CODECOV_TOKEN
-      - run:
-          name: Generate JavaDoc
-          command: mvn javadoc:javadoc
-      - run:
-          name: List JaCoCo Report Directory
-          command: ls -la target/site/jacoco
 
-  docs-deploy:
+  upload-codecov:
     docker:
-      - image: circleci/node:14  # Utilise Node.js pour le déploiement sur GitHub Pages
+      - image: cimg/openjdk:21.0
     steps:
       - checkout
-      - attach_workspace:
-          at: /workspace  # Attache le workspace pour accéder aux fichiers générés
       - run:
-          name: Install gh-pages Dependency
-          command: |
-            npm install -g gh-pages@2.0.1
-            git config user.email "hafsaabou2@gmail.com"
-            git config user.name "HafsaAbouyassine"
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:CmuXAAUOtBw24KObf1iu6KIBh0bTsO5iMyepBRflALg"  # fingerprint SSH
-      - run:
-          name: Deploy Documentation to GitHub Pages
-          command: gh-pages --dist target/site/apidocs/  # Déploie la JavaDoc générée
+          name: Upload Coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+        # Si le chemin du rapport est nécessaire, ajoutez : -f target/site/jacoco/jacoco.xml
 
 workflows:
-  version: 2
-  build_and_deploy:
+  upload-to-codecov:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - master  # Exécute le build seulement sur la branche master
-      - docs-deploy:
+      - build-and-test
+      - upload-codecov:
           requires:
-            - build
-          filters:
-            branches:
-              only:
-                - master
+            - build-and-test
