@@ -1,55 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
  <modelVersion>4.0.0</modelVersion>
- <groupId>fr.univ-avignon.tt</groupId>
- <artifactId>java-project</artifactId>
- <packaging>jar</packaging>
+
+ <groupId>techniqueDeTest</groupId>
+ <artifactId>ceri-m1-techniques-de-test</artifactId>
  <version>1.0-SNAPSHOT</version>
- <name>java-project</name>
- <url>http://univ-avignon.fr</url>
-
- <build>
-  <plugins>
-   <!-- Plugin for running tests -->
-   <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.0.0-M5</version>
-   </plugin>
-
-   <!-- JaCoCo Plugin for code coverage -->
-   <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.8</version>
-    <executions>
-     <!-- Prepare JaCoCo agent -->
-     <execution>
-      <goals>
-       <goal>prepare-agent</goal>
-      </goals>
-     </execution>
-     <!-- Generate the JaCoCo report after tests -->
-     <execution>
-      <id>report</id>
-      <phase>test</phase>
-      <goals>
-       <goal>report</goal>
-      </goals>
-      <configuration>
-       <dataFile>${project.build.directory}/jacoco.exec</dataFile>
-       <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
-       <reportsDirectory>${project.reporting.outputDirectory}/jacoco</reportsDirectory>
-      </configuration>
-     </execution>
-    </executions>
-   </plugin>
-  </plugins>
- </build>
 
  <dependencies>
+  <!-- Dependencies -->
+  <dependency>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-text</artifactId>
+   <version>1.3</version>
+  </dependency>
   <!-- JUnit Jupiter API for unit testing -->
   <dependency>
    <groupId>org.junit.jupiter</groupId>
@@ -62,6 +27,7 @@
    <groupId>org.junit.jupiter</groupId>
    <artifactId>junit-jupiter-engine</artifactId>
    <version>5.10.3</version>
+   <scope>test</scope>
   </dependency>
   <!-- Mockito for mocking in tests -->
   <dependency>
@@ -70,12 +36,116 @@
    <version>5.12.0</version>
    <scope>test</scope>
   </dependency>
-  <!-- JUnit 4 for legacy tests, if needed -->
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
-   <version>4.13.2</version>
+   <version>4.13.1</version>
    <scope>test</scope>
   </dependency>
  </dependencies>
+
+ <build>
+  <plugins>
+   <!-- Shade Plugin -->
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.2.0</version>
+    <executions>
+     <execution>
+      <phase>package</phase>
+      <goals>
+       <goal>shade</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+
+   <!-- Surefire Plugin for Running Tests -->
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.0.0-M5</version>
+    <configuration>
+     <testSourceDirectory>src/test/java</testSourceDirectory>
+    </configuration>
+   </plugin>
+
+   <!-- Compiler Plugin -->
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.13.0</version>
+    <configuration>
+     <source>8</source>
+     <target>8</target>
+    </configuration>
+   </plugin>
+
+   <!-- JaCoCo Plugin for Test Coverage -->
+   <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.8</version>
+    <executions>
+     <execution>
+      <goals>
+       <goal>prepare-agent</goal>
+      </goals>
+     </execution>
+     <execution>
+      <id>report</id>
+      <phase>test</phase>
+      <goals>
+       <goal>report</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+
+   <!-- Checkstyle Plugin for Code Style Check -->
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-checkstyle-plugin</artifactId>
+    <version>3.4.0</version>
+    <executions>
+     <execution>
+      <phase>verify</phase>
+      <goals>
+       <goal>checkstyle</goal>
+      </goals>
+     </execution>
+    </executions>
+    <configuration>
+     <configLocation>checkstyle.xml</configLocation>
+     <outputFile>target/checkstyle-result.xml</outputFile>
+     <failsOnError>true</failsOnError>
+    </configuration>
+   </plugin>
+
+   <!-- Badger Plugin for Generating Badges -->
+   <plugin>
+    <groupId>com.github.bordertech.buildtools</groupId>
+    <artifactId>badger</artifactId>
+    <version>1.0.0</version>
+    <executions>
+     <execution>
+      <id>create-checkstyle-badge</id>
+      <phase>site</phase>
+      <goals>
+       <goal>badges</goal>
+      </goals>
+      <configuration>
+       <outputDir>target/site/badges/</outputDir>
+       <inputFiles>
+        <inputFile>target/checkstyle-result.xml</inputFile>
+       </inputFiles>
+      </configuration>
+     </execution>
+    </executions>
+   </plugin>
+
+  </plugins>
+ </build>
+
 </project>

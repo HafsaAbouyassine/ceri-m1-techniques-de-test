@@ -4,35 +4,57 @@ orbs:
   codecov: codecov/codecov@4.0.1
 
 jobs:
-  build-and-test:
+  build:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: circleci/openjdk:8-jdk  # Utilise l'image OpenJDK 8 pour la compilation et les tests
     steps:
-      - checkout
+      - checkout  # Récupère le code source
       - run:
-          name: Build Project
-          command: mvn -B -DskipTests clean package
-      - run:
-          name: Run Tests and Collect Coverage
-          command: mvn test
+          name: Run Maven Tests
+          command: mvn clean test
       - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
+      - codecov/upload:  # Utilise l'orbe Codecov pour uploader les résultats
+          file: target/site/jacoco/jacoco.xml  # Spécifie le rapport JaCoCo généré
+          token: $CODECOV_TOKEN
+      - run:
+          name: Generate JavaDoc
+          command: mvn javadoc:javadoc
 
-  upload-codecov:
+  docs-deploy:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: circleci/node:8.10.0  # Utilise Node.js pour le déploiement sur GitHub Pages
     steps:
       - checkout
+      - attach_workspace:
+          at: /workspace  # Attache le workspace pour accéder aux fichiers générés
       - run:
-          name: Upload Coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
-        # Si le chemin du rapport est nécessaire, ajoutez : -f target/site/jacoco/jacoco.xml
+          name: Install gh-pages Dependency
+          command: |
+            npm install -g gh-pages@2.0.1
+            git config user.email "hafsaabou2@gmail.com"
+            git config user.name "HafsaAbouyassine"
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:CmuXAAUOtBw24KObf1iu6KIBh0bTsO5iMyepBRflALg"  # Remplacez par votre fingerprint SSH
+      - run:
+          name: Deploy Documentation to GitHub Pages
+          command: gh-pages --dist target/site/apidocs/  # Déploie la JavaDoc générée
 
 workflows:
-  upload-to-codecov:
+  version: 2
+  build_and_deploy:
     jobs:
-      - build-and-test
-      - upload-codecov:
+      - build:
+          filters:
+            branches:
+              only:
+                - master  # Exécute le build seulement sur la branche master
+      - docs-deploy:
           requires:
-            - build-and-test
+            - build
+          filters:
+            branches:
+              only:
+                - master
