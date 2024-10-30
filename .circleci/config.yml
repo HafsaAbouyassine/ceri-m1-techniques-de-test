@@ -4,27 +4,24 @@ orbs:
   codecov: codecov/codecov@4.0.1
 
 jobs:
-  # Job to build and test the project
   build-and-test:
     docker:
       - image: cimg/openjdk:21.0
     steps:
       - checkout
       - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
+          name: Set Up Environment
+          command: |
+            sudo apt update
+            sudo apt install -y python3-pip
+            pip3 install -r requirements.txt
       - run:
-          name: Test
+          name: Run Tests and Collect Coverage
           command: mvn test
       - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
-      - run:
-          name: Check JaCoCo Report
-          command: ls -R target/site/jacoco
 
-
-  # Job to upload coverage to Codecov
   upload-codecov:
     docker:
       - image: cimg/openjdk:21.0
@@ -32,8 +29,9 @@ jobs:
       - checkout
       - run:
           name: Upload Coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f target/site/jacoco/jacoco.xml
-
+          command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+        # Ajoutez un chemin de rapport si nécessaire
+        # command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -f target/site/jacoco/jacoco.xml
 
 workflows:
   upload-to-codecov:
