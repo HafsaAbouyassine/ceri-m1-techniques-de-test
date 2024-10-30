@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:17.0  # Utilise l'image OpenJDK 21 pour la compilation et les tests
+      - image: circleci/openjdk:17  # Utilise l'image OpenJDK 17 pour la compilation et les tests
     steps:
       - checkout  # Récupère le code source
       - run:
@@ -27,7 +27,7 @@ jobs:
 
   docs-deploy:
     docker:
-      - image: circleci/node:8.10.0  # Utilise Node.js pour le déploiement sur GitHub Pages
+      - image: circleci/node:14  # Utilise Node.js pour le déploiement sur GitHub Pages
     steps:
       - checkout
       - attach_workspace:
