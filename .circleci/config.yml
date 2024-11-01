@@ -68,7 +68,6 @@ jobs:
             echo "Uploading Jacoco report to Codecov without age check"
             bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -X age -v
     
-    
 
 workflows:
   upload-to-codecov:

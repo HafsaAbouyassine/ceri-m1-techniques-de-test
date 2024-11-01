@@ -1,45 +1,46 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 
 public class IPokemonMetadataProviderTest {
 
-    @Mock
-    private IPokemonMetadataProvider metadataProvider;
+    IPokemonMetadataProvider pokemonMetadataProvider;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @BeforeEach
+    void setup() {
+        pokemonMetadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
+    }
+
+
+    @Test
+    void getPokemonMetadaInvalidIndexTest() throws PokedexException{
+        //test pour vérifier qu'un numéro d'index invalide lance une exception
+        when(pokemonMetadataProvider.getPokemonMetadata(151)).thenThrow(new PokedexException("Invalid Index"));
+
+        assertThrows(PokedexException.class, () -> {
+            pokemonMetadataProvider.getPokemonMetadata(151);
+        });
     }
 
     @Test
-    public void testGetPokemonMetadata() throws PokedexException {
-        // Arrange
-        PokemonMetadata bulbizarreMetadata = new PokemonMetadata(0, "Bulbizarre", 126, 126, 90);
-        PokemonMetadata aqualiMetadata = new PokemonMetadata(133, "Aquali", 186, 168, 260);
+    void getPokemonMetadaTest() throws PokedexException{
+        //test pour vérifier que cela retourne les métadonnées correctes
+        when(pokemonMetadataProvider.getPokemonMetadata(0)).thenReturn(new PokemonMetadata(0, "Bulbizarre", 126, 126, 90));
 
-        when(metadataProvider.getPokemonMetadata(0)).thenReturn(bulbizarreMetadata);
-        when(metadataProvider.getPokemonMetadata(133)).thenReturn(aqualiMetadata);
+        PokemonMetadata bulbizarre = pokemonMetadataProvider.getPokemonMetadata(0);
 
-        // Act
-        PokemonMetadata actualBulbizarreMetadata = metadataProvider.getPokemonMetadata(0);
-        PokemonMetadata actualAqualiMetadata = metadataProvider.getPokemonMetadata(133);
-
-        // Assert
-        assertEquals(bulbizarreMetadata, actualBulbizarreMetadata);
-        assertEquals(aqualiMetadata, actualAqualiMetadata);
+        assertEquals(0,bulbizarre.getIndex());
+        assertEquals("Bulbizarre",bulbizarre.getName());
+        assertEquals(126,bulbizarre.getAttack());
+        assertEquals(126,bulbizarre.getDefense());
+        assertEquals(90,bulbizarre.getStamina());
     }
 
-    @Test(expected = PokedexException.class)
-    public void testGetPokemonMetadataWithInvalidIndex() throws PokedexException {
-        when(metadataProvider.getPokemonMetadata(999)).thenThrow(new PokedexException("Invalid index"));
-
-        metadataProvider.getPokemonMetadata(999);
-    }
 }

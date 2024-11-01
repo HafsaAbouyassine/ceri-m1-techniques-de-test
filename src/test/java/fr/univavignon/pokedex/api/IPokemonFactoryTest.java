@@ -1,38 +1,58 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 
 public class IPokemonFactoryTest {
 
-    @Mock
-    private IPokemonFactory pokemonFactory;
+    IPokemonFactory pokemonFactory;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @BeforeEach
+    void setup() {
+        pokemonFactory = Mockito.mock(IPokemonFactory.class);
     }
 
     @Test
-    public void testCreatePokemon() {
-        // Arrange
-        Pokemon expectedBulbizarre = new Pokemon(0, "Bulbizarre", 613, 64, 4000, 4, 126, 126, 90, 56);
-        Pokemon expectedAquali = new Pokemon(133, "Aquali", 2729, 202, 5000, 4, 186, 168, 260, 100);
+    void createPokemonTest(){
+        //test pour vérifier la création correcte d'un Pokemon
+        when(pokemonFactory.createPokemon(0,613,64,4000,4)).thenReturn(new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56));
 
-        when(pokemonFactory.createPokemon(0, 613, 64, 4000, 4)).thenReturn(expectedBulbizarre);
-        when(pokemonFactory.createPokemon(133, 2729, 202, 5000, 4)).thenReturn(expectedAquali);
+        Pokemon bulbizarre = pokemonFactory.createPokemon(0,613,64,4000,4);
 
-        // Act
-        Pokemon actualBulbizarre = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
-        Pokemon actualAquali = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
-
-        // Assert
-        assertEquals(expectedBulbizarre, actualBulbizarre);
-        assertEquals(expectedAquali, actualAquali);
+        assertEquals(0,bulbizarre.getIndex());
+        assertEquals("Bulbizarre",bulbizarre.getName());
+        assertEquals(126,bulbizarre.getAttack());
+        assertEquals(126,bulbizarre.getDefense());
+        assertEquals(90,bulbizarre.getStamina());
+        assertEquals(613,bulbizarre.getCp());
+        assertEquals(64,bulbizarre.getHp());
+        assertEquals(4000,bulbizarre.getDust());
+        assertEquals(4,bulbizarre.getCandy());
+        assertEquals(56,bulbizarre.getIv());
     }
+
+    @Test
+    void createPokemonInvalidParameterTest(){
+        //test pour vérifier la création d'un Pokemon  en cas de paramètres invalides
+        when(pokemonFactory.createPokemon(-1, -613, -64, -4000, -4)).thenReturn(new Pokemon(-1, "Unknown", 0, 0, 0, 0, 0, 0, 0, 0));
+
+        Pokemon invalidPokemon = pokemonFactory.createPokemon(-1, -613, -64, -4000, -4);
+
+        assertEquals(-1, invalidPokemon.getIndex());
+        assertEquals("Unknown", invalidPokemon.getName());
+        assertEquals(0, invalidPokemon.getAttack());
+        assertEquals(0, invalidPokemon.getDefense());
+        assertEquals(0, invalidPokemon.getStamina());
+        assertEquals(0, invalidPokemon.getCp());
+        assertEquals(0, invalidPokemon.getHp());
+        assertEquals(0, invalidPokemon.getDust());
+        assertEquals(0, invalidPokemon.getCandy());
+        assertEquals(0, invalidPokemon.getIv());
+    }
+
 }

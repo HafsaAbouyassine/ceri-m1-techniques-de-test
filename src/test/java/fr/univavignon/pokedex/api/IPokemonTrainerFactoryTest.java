@@ -1,54 +1,52 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 
 public class IPokemonTrainerFactoryTest {
 
-    @Mock
-    private IPokemonTrainerFactory trainerFactory;
+    IPokemonTrainerFactory pokemonTrainerFactory;
 
-    @Mock
-    private IPokedexFactory pokedexFactory;  // Ici on simule un IPokedexFactory
-
-    @Mock
-    private IPokedex pokedex;  // Ceci est le résultat créé par le pokedexFactory
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);  // Remplacer initMocks par openMocks
+    @BeforeEach
+    void setup() {
+        pokemonTrainerFactory = Mockito.mock(IPokemonTrainerFactory.class);
     }
 
     @Test
-    public void testCreateTrainer() {
-        // Arrange
-        String trainerName = "Ash";
-        Team trainerTeam = Team.VALOR;
+    void createTrainerTest() {
+        //test pour vérifier la création correcte d'un pokemon trainer
+        IPokedexFactory pokedexFactory = Mockito.mock(IPokedexFactory.class);
+        IPokedex pokedex = Mockito.mock(IPokedex.class);
+        String trainerName = "nomTest";
+        Team trainerTeam = Team.MYSTIC;
 
-        // On simule que le pokedexFactory renvoie un pokedex lorsqu'on l'appelle
-        pokedexFactory.createPokedex(any(), any());
-        when(pokedexFactory.createPokedex(any(), any())).thenReturn(pokedex);
+        when(pokemonTrainerFactory.createTrainer(trainerName, trainerTeam, pokedexFactory)).thenReturn(new PokemonTrainer(trainerName, trainerTeam, pokedex));
 
-        // Création de l'entraîneur attendu
-        PokemonTrainer expectedTrainer = new PokemonTrainer(trainerName, trainerTeam, pokedex);
+        PokemonTrainer pokemonTrainer = pokemonTrainerFactory.createTrainer(trainerName, trainerTeam, pokedexFactory);
 
-        // Simuler le comportement de trainerFactory pour qu'il renvoie l'entraîneur attendu
-        when(trainerFactory.createTrainer(trainerName, trainerTeam, pokedexFactory)).thenReturn(expectedTrainer);
+        assertEquals("nomTest", pokemonTrainer.getName());
+        assertEquals(Team.MYSTIC, pokemonTrainer.getTeam());
+        assertEquals(pokedex, pokemonTrainer.getPokedex());
 
-        // Act
-        PokemonTrainer actualTrainer = trainerFactory.createTrainer(trainerName, trainerTeam, pokedexFactory);
-
-        // Assert
-        assertNotNull(actualTrainer);  // Vérifier que l'entraîneur n'est pas null
-        assertEquals(expectedTrainer, actualTrainer);  // Vérifier que l'entraîneur attendu et réel sont identiques
-
-        // Vérifier que la factory a bien été appelée avec les bons arguments
-        verify(trainerFactory).createTrainer(trainerName, trainerTeam, pokedexFactory);
-        verify(pokedexFactory).createPokedex(any(), any());
     }
+
+    @Test
+    void createTrainerWithNoTeamTest() {
+        //test pour vérifier la non création d'un pokemon trainer en cas de paramètre invalide
+        IPokedexFactory pokedexFactory = Mockito.mock(IPokedexFactory.class);
+        String trainerName = "nomTest";
+
+        when(pokemonTrainerFactory.createTrainer(trainerName, null, pokedexFactory)).thenReturn(null);
+
+        PokemonTrainer pokemonTrainer = pokemonTrainerFactory.createTrainer(trainerName, null, pokedexFactory);
+
+        assertEquals(null, pokemonTrainer);
+
+    }
+
 }

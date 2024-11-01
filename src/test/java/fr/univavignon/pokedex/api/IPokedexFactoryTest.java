@@ -1,42 +1,33 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 
 public class IPokedexFactoryTest {
 
-    @Mock
-    private IPokedexFactory pokedexFactory;
+    IPokedexFactory pokedexFactory;
 
-    @Mock
-    private IPokemonMetadataProvider metadataProvider;
-
-    @Mock
-    private IPokemonFactory pokemonFactory;
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @BeforeEach
+    void setup() {
+        pokedexFactory = Mockito.mock(IPokedexFactory.class);
     }
 
     @Test
-    public void testCreatePokedex() {
-        // Arrange
-        IPokedex expectedPokedex = mock(IPokedex.class);
-        when(pokedexFactory.createPokedex(metadataProvider, pokemonFactory)).thenReturn(expectedPokedex);
+    void createPokedexTest() {
+        //test pour vérifier la création correcte d'un pokedex
+        IPokemonMetadataProvider pokemonMetadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
+        IPokedex pokedex = Mockito.mock(IPokedex.class);
+        IPokemonFactory pokemonFactory = Mockito.mock(IPokemonFactory.class);
+        when(pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory)).thenReturn(pokedex);
 
-        // Act
-        IPokedex actualPokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+        IPokedex createdPokedex = pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory);
+        assertEquals(pokedex, createdPokedex);
 
-        // Assert
-        assertNotNull(actualPokedex);
-        assertEquals(expectedPokedex, actualPokedex);
     }
+
 }
