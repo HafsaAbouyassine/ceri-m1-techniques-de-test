@@ -21,13 +21,15 @@ jobs:
       - run:
           name: Check for Jacoco Report File
           command: |
-            if [ -f target/jacoco/jacoco.xml ]; then
-              echo "Jacoco report found!"
-              cat target/jacoco/jacoco.xml | head -n 20
-            else
-              echo "Jacoco report not found in target/jacoco/"
-              exit 1
-            fi
+              echo "Checking for Jacoco report in target/jacoco/"
+              ls target/jacoco/
+              if [ -f target/jacoco/jacoco.xml ]; then
+                echo "Jacoco report found!"
+                cat target/jacoco/jacoco.xml | head -n 20
+              else
+                echo "Jacoco report not found in target/jacoco/"
+                exit 1
+              fi
 
 
   upload-codecov:
@@ -37,7 +39,10 @@ jobs:
       - checkout
       - run:
           name: Upload Coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash) -f target/jacoco/jacoco.xml -t $CODECOV_TOKEN
+          command: |
+              echo "Uploading Jacoco report to Codecov"
+              ls target/jacoco/
+              bash <(curl -s https://codecov.io/bash) -f target/jacoco/jacoco.xml -t $CODECOV_TOKEN
 
 workflows:
   upload-to-codecov:
