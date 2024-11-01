@@ -21,22 +21,23 @@ jobs:
       - run:
           name: Check for Jacoco Report File
           command: |
-              echo "Checking for Jacoco report in target/site/jacoco/"
-              ls target/site/jacoco/
-              if [ -f target/site/jacoco/jacoco.xml ]; then
-                echo "Jacoco report found!"
-                cat target/site/jacoco/jacoco.xml | head -n 20
-              else
-                echo "Jacoco report not found in target/site/jacoco/"
-                exit 1
-              fi
+            echo "Checking for Jacoco report in target/site/jacoco/"
+            ls target/site/jacoco/
+            if [ -f target/site/jacoco/jacoco.xml ]; then
+              echo "Jacoco report found!"
+              cat target/site/jacoco/jacoco.xml | head -n 20
+            else
+              echo "Jacoco report not found in target/site/jacoco/"
+              exit 1
+            fi
       - run:
           name: Display Jacoco XML Report
           command: |
             cat target/site/jacoco/jacoco.xml | head -n 20
+    
+    
 
-
-
+    executor:
   upload-codecov:
     docker:
       - image: cimg/openjdk:21.0
@@ -45,11 +46,12 @@ jobs:
       - run:
           name: Upload Coverage to Codecov
           command: |
-              echo "Uploading Jacoco report to Codecov"
-              ls target/site/jacoco/
-              bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -F
-            
-
+            echo "Uploading Jacoco report to Codecov"
+            ls target/site/jacoco/
+            bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -F
+    
+    
+    executor:
 workflows:
   upload-to-codecov:
     jobs:
