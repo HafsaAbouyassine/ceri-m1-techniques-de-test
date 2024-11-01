@@ -20,7 +20,10 @@ jobs:
           command: ls -R target
       - run:
           name: Generate Coverage Report
-          command: mvn jacoco:report
+          command: |
+            mvn jacoco:report
+            echo "Listing target/site directory after report generation:"
+            ls -R target/site
       - run:
           name: Display Working Directory and Content
           command: |
