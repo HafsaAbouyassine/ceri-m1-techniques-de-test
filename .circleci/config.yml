@@ -16,8 +16,19 @@ jobs:
           name: Run Tests and Collect Coverage
           command: mvn verify
       - run:
+          name: List Target Directory After Verification
+          command: ls -R target
+      - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
+      - run:
+          name: Display Working Directory and Content
+          command: |
+            echo "Répertoire courant : $(pwd)"
+            ls -R
+      - run:
+          name: List Target Directory After Jacoco Report
+          command: ls -R target
       - run:
           name: Check for Jacoco Report File
           command: |
