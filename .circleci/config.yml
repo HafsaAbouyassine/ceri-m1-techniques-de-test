@@ -26,7 +26,7 @@ jobs:
       - checkout
       - run:
           name: Upload Coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN
+          command: bash <(curl -s https://codecov.io/bash) -f target/jacoco/jacoco.xml -t $CODECOV_TOKEN
 
 workflows:
   upload-to-codecov:
