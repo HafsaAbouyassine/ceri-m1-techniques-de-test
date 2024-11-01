@@ -14,10 +14,14 @@ jobs:
           command: mvn -B -DskipTests clean package
       - run:
           name: Run Tests and Collect Coverage
-          command: mvn test
+          command: mvn verify
       - run:
           name: Generate Coverage Report
           command: mvn jacoco:report
+      - run:
+          name: Generate Aggregated Coverage Report
+          command: mvn jacoco:report-aggregate
+
 
   upload-codecov:
     docker:
