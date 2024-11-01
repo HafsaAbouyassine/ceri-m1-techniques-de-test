@@ -23,11 +23,11 @@ jobs:
           command: |
               echo "Checking for Jacoco report in target/jacoco/"
               ls target/jacoco/
-              if [ -f target/jacoco/jacoco.xml ]; then
+              if [ -f target/site/jacoco/jacoco.xml ]; then
                 echo "Jacoco report found!"
-                cat target/jacoco/jacoco.xml | head -n 20
+                cat target/site/jacoco/jacoco.xml | head -n 20
               else
-                echo "Jacoco report not found in target/jacoco/"
+                echo "Jacoco report not found in target/site/jacoco/"
                 exit 1
               fi
 
@@ -42,7 +42,7 @@ jobs:
           command: |
               echo "Uploading Jacoco report to Codecov"
               ls target/jacoco/
-              bash <(curl -s https://codecov.io/bash) -f target/jacoco/jacoco.xml -t $CODECOV_TOKEN
+              bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN
 
 workflows:
   upload-to-codecov:
