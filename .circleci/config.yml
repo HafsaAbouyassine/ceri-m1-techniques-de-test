@@ -30,6 +30,11 @@ jobs:
                 echo "Jacoco report not found in target/site/jacoco/"
                 exit 1
               fi
+      - run:
+          name: Display Jacoco XML Report
+          command: |
+            cat target/site/jacoco/jacoco.xml | head -n 20
+
 
 
   upload-codecov:
@@ -41,8 +46,9 @@ jobs:
           name: Upload Coverage to Codecov
           command: |
               echo "Uploading Jacoco report to Codecov"
-              ls target/jacoco/
-              bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN
+              ls target/site/jacoco/
+              bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -F
+            
 
 workflows:
   upload-to-codecov:
