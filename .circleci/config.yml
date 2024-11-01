@@ -53,7 +53,7 @@ jobs:
           name: Upload Coverage to Codecov
           command: |
             echo "Uploading Jacoco report to Codecov without age check"
-            bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -X age
+            bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN
     
     
     executor:
