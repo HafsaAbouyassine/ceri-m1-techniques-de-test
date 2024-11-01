@@ -45,6 +45,12 @@ jobs:
               exit 1
             fi
       - run:
+          name: Vérifier le contenu de Jacoco avant l'upload
+          command: |
+            echo "Vérification du contenu de target/site/jacoco/"
+            ls -l target/site/jacoco/
+            cat target/site/jacoco/jacoco.xml
+      - run:
           name: Display Jacoco XML Report
           command: |
             cat target/site/jacoco/jacoco.xml | head -n 20
@@ -56,12 +62,6 @@ jobs:
       - image: cimg/openjdk:21.0
     steps:
       - checkout
-      - run:
-          name: Vérifier le contenu de Jacoco avant l'upload
-          command: |
-            echo "Vérification du contenu de target/site/jacoco/"
-            ls -l target/site/jacoco/
-            cat target/site/jacoco/jacoco.xml
       - run:
           name: Upload Coverage to Codecov
           command: |
