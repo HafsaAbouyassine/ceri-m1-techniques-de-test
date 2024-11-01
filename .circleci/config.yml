@@ -21,8 +21,8 @@ jobs:
       - run:
           name: Check for Jacoco Report File
           command: |
-              echo "Checking for Jacoco report in target/jacoco/"
-              ls target/jacoco/
+              echo "Checking for Jacoco report in target/site/jacoco/"
+              ls target/site/jacoco/
               if [ -f target/site/jacoco/jacoco.xml ]; then
                 echo "Jacoco report found!"
                 cat target/site/jacoco/jacoco.xml | head -n 20
