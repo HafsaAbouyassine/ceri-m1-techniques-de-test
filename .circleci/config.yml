@@ -48,7 +48,6 @@ jobs:
     
     
 
-    executor:
   upload-codecov:
     docker:
       - image: cimg/openjdk:21.0
@@ -67,8 +66,7 @@ jobs:
             bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -X age -v
     
     
-    
-    executor:
+
 workflows:
   upload-to-codecov:
     jobs:
