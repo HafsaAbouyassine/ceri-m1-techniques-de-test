@@ -33,6 +33,6 @@ Ce projet consiste en la création d'une API Pokedex en Java, permettant de mani
 - ```mvn jacoco:report```
 
 ### Liens Utiles
-- [![Documentation Jacoco](https://www.jacoco.org/jacoco/)]
-- [![Documentation Codecov](https://docs.codecov.com/docs/quick-start)]
-- [![Documentation CircleCI](https://circleci.com/docs/)]
+- [Documentation Jacoco](https://www.jacoco.org/jacoco/)
+- [Documentation Codecov](https://docs.codecov.com/docs/quick-start)
+- [Documentation CircleCI](https://circleci.com/docs/)
