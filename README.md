@@ -1,37 +1,46 @@
-# UCE Génie Logiciel Avancé : Techniques de tests
+# Projet Java - Pokedex API
 
-## Introduction
+## Informations Personnelles
+- **Nom** : Abouyassine
+- **Prénom** : Hafsa
+- **Groupe** : M1 ILSEN Grp1 class
 
-Vous allez à travers ces projet mettre en application une partie des aspects évoqués en cours vis à vis des techniques de tests.  
-Pour cela nous allons réaliser un projet logiciel de petite taille, en suivant la roadmap suivante : 
-- Setup du projet
-- Mise en place des outils d’intégration continue
-- Écriture des tests unitaires
-- Écriture des mocks, et validation des tests
-- Développement dirigé par les tests
-- Documentation et conventions de style
-- Test d'une implémentation donnée
+## Badges de Statut
 
-Durant cette série de TPs, le gestionnaire de version Git sera utilisé à foison, à travers la plateforme GitHub. Si vous n’êtes pas à l’aise avec cet outil[^1], [voici](http://rogerdudler.github.io/git-guide/) un petit guide à garder sous la main.
+- [![CircleCI](https://dl.circleci.com/status-badge/img/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master)
+- [![codecov](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/graph/badge.svg?token=MFSONCTGBM)](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test)
 
-## Sujets
+## Description du Projet
+Ce projet consiste en la création d'une API Pokedex en Java, permettant de manipuler des données de Pokémon telles que leurs caractéristiques et leur classement selon divers critères. L'objectif principal est d'implémenter une API qui fournit les informations nécessaires sur chaque Pokémon et de réaliser des tests pour assurer la qualité du code.
 
-L'ensemble des sujets de TPs peut être trouvé dans le dossier `TPs`.
+## Choix Techniques et Implémentation
 
-Le dossier `src` contient la définition de l'ensemble des interfaces qui seront l'objet de vos travaux.
+### Langage et Frameworks
+- **Langage** : Java
+- **Framework de Test** : JUnit pour les tests unitaires et Mockito pour les mocks, permettant de tester des classes isolées sans dépendances externes.
+- **Couverture de Test** : JaCoCo, pour générer des rapports de couverture de code et les publier sur Codecov pour un suivi en ligne.
+- **CI/CD** : CircleCI, pour l'intégration continue et l'exécution automatisée des tests sur chaque commit.
 
-## Rendus
+### Structure du Projet
+- `src/main/java` : contient le code source de l'application.
+- `src/test/java` : contient les tests unitaires.
+- `target/site/jacoco` : contient les rapports de couverture générés par JaCoCo. 
 
-Le rendu des TPs se fait au rythme suivant :
+### Classes Créées
+- Pokedex : Gère la liste des Pokémons et fournit des méthodes pour accéder aux métadonnées.
+- PokedexFactory : Crée une instance de Pokedex.
+- PokemonFactory : Crée un Pokémon en utilisant les paramètres fournis.
+- PokemonTrainerFactory : Crée un dresseur de Pokémon avec un Pokedex associé.
+- PokemonMetadataProvider : Fournit des métadonnées pour un Pokémon donné.
+Avec ces classes implémentées, les tests devraient reconnaître les symboles nécessaires et pouvoir compiler et s'exécuter.
 
-- TP1 : 2ème séance
-- TP2 : 2ème séance
-- TP3 : 3ème séance
-- TP4 : 5ème séance
-- TP5 : dernière séance
-- TP6 : dernière séance
+### Lancer les tests 
+- ```mvn clean verify```
 
-Pour chaque rendu vous devez créer un tag à partir du commit qui correspond à la complétion du TP.  
-Si vous ne spécifiez pas de tag, le dernier commit à la date-heure de la fin de séance sera celui considéré.
+### Générer le rapport de couverture JaCoCo 
+- ```mvn jacoco:report```
 
-[^1]: Si vous n’êtes vraiment pas à l’aise avec cet outil nous vous conseillons quand même vivement de vous y mettre.
+### Liens Utiles
+- [Documentation Jacoco](https://www.jacoco.org/jacoco/)
+- [Documentation Codecov](https://docs.codecov.com/docs/quick-start)
+- [Documentation CircleCI](https://circleci.com/docs/)
