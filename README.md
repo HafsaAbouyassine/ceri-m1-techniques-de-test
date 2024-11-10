@@ -24,7 +24,15 @@ Ce projet consiste en la création d'une API Pokedex en Java, permettant de mani
 ### Structure du Projet
 - `src/main/java` : contient le code source de l'application.
 - `src/test/java` : contient les tests unitaires.
-- `target/site/jacoco` : contient les rapports de couverture générés par JaCoCo.
+- `target/site/jacoco` : contient les rapports de couverture générés par JaCoCo. 
+
+### Classes Créées
+- Pokedex : Gère la liste des Pokémons et fournit des méthodes pour accéder aux métadonnées.
+- PokedexFactory : Crée une instance de Pokedex.
+- PokemonFactory : Crée un Pokémon en utilisant les paramètres fournis.
+- PokemonTrainerFactory : Crée un dresseur de Pokémon avec un Pokedex associé.
+- PokemonMetadataProvider : Fournit des métadonnées pour un Pokémon donné.
+Avec ces classes implémentées, les tests devraient reconnaître les symboles nécessaires et pouvoir compiler et s'exécuter.
 
 ### Lancer les tests 
 - ```mvn clean verify```
