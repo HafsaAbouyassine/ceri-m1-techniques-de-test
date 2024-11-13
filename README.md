@@ -9,7 +9,7 @@
 
 - [![CircleCI](https://dl.circleci.com/status-badge/img/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master)
 - [![codecov](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/graph/badge.svg?token=MFSONCTGBM)](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test)
-- ![Checkstyle Badge](badges/checkstyle-badge.svg)
+- ![Checkstyle Badge](https://github.com/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master/badges/checkstyle-badge.svg)
 
 ## Description du Projet
 Ce projet consiste en la création d'une API Pokedex en Java, permettant de manipuler des données de Pokémon telles que leurs caractéristiques et leur classement selon divers critères. L'objectif principal est d'implémenter une API qui fournit les informations nécessaires sur chaque Pokémon et de réaliser des tests pour assurer la qualité du code.
