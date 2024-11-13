@@ -1,18 +1,34 @@
 package fr.univavignon.pokedex.api;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 public class IPokemonTrainerFactoryTest {
+
+    private IPokemonTrainerFactory trainerFactory;
+    private PokemonMetadataProvider metadataProvider;
+    private IPokedexFactory pokedexFactory;
+
+    @Before
+    public void setUp() {
+        pokedexFactory = new PokedexFactory();
+        metadataProvider = new PokemonMetadataProvider();
+        trainerFactory = new PokemonTrainerFactory(metadataProvider, new PokemonFactory(metadataProvider));
+    }
+
     @Test
     public void testCreateTrainer() {
-        PokedexFactory pokedexFactory = Mockito.mock(PokedexFactory.class);
-        PokemonTrainerFactory trainerFactory = new PokemonTrainerFactory();
+        Team team = Team.MYSTIC;
+        PokemonTrainer trainer = trainerFactory.createTrainer("Ash", team, pokedexFactory);
+        assertNotNull(trainer);
 
-        PokemonTrainer trainer = trainerFactory.createTrainer("Ash", Team.MYSTIC, pokedexFactory);
-        Assert.assertNotNull(trainer);
-        Assert.assertEquals("Ash", trainer.getName());
-        Assert.assertEquals(Team.MYSTIC, trainer.getTeam());
+        assertEquals("Ash", trainer.getName());
+        assertEquals(team, trainer.getTeam());
+        assertEquals(0, trainer.getPokedex().size());
     }
+
 }

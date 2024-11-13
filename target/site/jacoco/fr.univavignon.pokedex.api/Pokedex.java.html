@@ -1,59 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pokedex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-project</a> &gt; <a href="index.source.html" class="el_package">fr.univavignon.pokedex.api</a> &gt; <span class="el_source">Pokedex.java</span></div><h1>Pokedex.java</h1><pre class="source lang-java linenums">package fr.univavignon.pokedex.api;
-
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pokedex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Projet sur les techniques de test</a> &gt; <a href="index.source.html" class="el_package">fr.univavignon.pokedex.api</a> &gt; <span class="el_source">Pokedex.java</span></div><h1>Pokedex.java</h1><pre class="source lang-java linenums">package fr.univavignon.pokedex.api;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Classe représentant le Pokedex, implémentant l'interface IPokedex.
+ * @author Djaghloul Ayoub
+ */
 public class Pokedex implements IPokedex {
-<span class="nc" id="L9">    private List&lt;Pokemon&gt; pokemons = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L11">    private final List&lt;Pokemon&gt; pokemons = new ArrayList&lt;&gt;();</span>
     private final IPokemonMetadataProvider metadataProvider;
     private final IPokemonFactory pokemonFactory;
+    /**
+     * Construit une instance de Pokedex avec le fournisseur de métadonnées et la fabrique de Pokémon spécifiés.
+     * @param metadataProvider le fournisseur de métadonnées Pokémon
+     * @param pokemonFactory la fabrique pour créer des instances de Pokémon
+     */
+<span class="fc" id="L19">    public Pokedex(IPokemonMetadataProvider metadataProvider, IPokemonFactory pokemonFactory) {</span>
+<span class="fc" id="L20">        this.metadataProvider = metadataProvider;</span>
+<span class="fc" id="L21">        this.pokemonFactory = pokemonFactory;</span>
+<span class="fc" id="L22">    }</span>
 
-<span class="nc" id="L13">    public Pokedex(IPokemonMetadataProvider metadataProvider, IPokemonFactory pokemonFactory) {</span>
-<span class="nc" id="L14">        this.metadataProvider = metadataProvider;</span>
-<span class="nc" id="L15">        this.pokemonFactory = pokemonFactory;</span>
-<span class="nc" id="L16">    }</span>
-
+    /**
+     * Retourne le nombre de Pokémon dans le Pokedex.
+     * @return le nombre de Pokémon
+     */
     @Override
     public int size() {
-<span class="nc" id="L20">        return pokemons.size();</span>
+<span class="fc" id="L30">        return pokemons.size();</span>
     }
 
+    /**
+     * Ajoute un Pokémon au Pokedex.
+     * @param pokemon le Pokémon à ajouter
+     * @return l'index du Pokémon ajouté
+     */
     @Override
     public int addPokemon(Pokemon pokemon) {
-<span class="nc" id="L25">        pokemons.add(pokemon);</span>
-<span class="nc" id="L26">        return pokemons.size() - 1;</span>
+<span class="fc" id="L40">        pokemons.add(pokemon);</span>
+<span class="fc" id="L41">        return pokemons.size() - 1; // Retourne l'index du Pokémon ajouté</span>
     }
 
+    /**
+     * Retourne le Pokémon correspondant à l'index spécifié.
+     * @param id l'index du Pokémon
+     * @return le Pokémon correspondant
+     * @throws PokedexException si l'index est invalide
+     */
     @Override
     public Pokemon getPokemon(int id) throws PokedexException {
-<span class="nc bnc" id="L31" title="All 4 branches missed.">        if (id &lt; 0 || id &gt;= pokemons.size()) {</span>
-<span class="nc" id="L32">            throw new PokedexException(&quot;Invalid Pokemon ID&quot;);</span>
+<span class="pc bpc" id="L52" title="1 of 4 branches missed.">        if (id &lt; 0 || id &gt;= pokemons.size()) {</span>
+<span class="fc" id="L53">            throw new PokedexException(&quot;ID invalide : &quot; + id);</span>
         }
-<span class="nc" id="L34">        return pokemons.get(id);</span>
+<span class="fc" id="L55">        return pokemons.get(id);</span>
     }
 
+    /**
+     * Retourne la liste des Pokémon du Pokedex.
+     * @return la liste des Pokémon
+     */
     @Override
     public List&lt;Pokemon&gt; getPokemons() {
-<span class="nc" id="L39">        return Collections.unmodifiableList(pokemons);</span>
+<span class="fc" id="L64">        return new ArrayList&lt;&gt;(pokemons); // Retourne une copie pour éviter la modification extérieure</span>
     }
 
+    /**
+     * Retourne la liste des Pokémon du Pokedex, triée selon l'ordre spécifié.
+     * @param order le comparateur pour trier les Pokémon
+     * @return la liste des Pokémon triée
+     */
     @Override
     public List&lt;Pokemon&gt; getPokemons(Comparator&lt;Pokemon&gt; order) {
-<span class="nc" id="L44">        List&lt;Pokemon&gt; sortedList = new ArrayList&lt;&gt;(pokemons);</span>
-<span class="nc" id="L45">        sortedList.sort(order);</span>
-<span class="nc" id="L46">        return Collections.unmodifiableList(sortedList);</span>
+<span class="fc" id="L74">        List&lt;Pokemon&gt; sortedPokemons = new ArrayList&lt;&gt;(pokemons);</span>
+<span class="fc" id="L75">        sortedPokemons.sort(order);</span>
+<span class="fc" id="L76">        return sortedPokemons;</span>
     }
 
-    @Override
-    public PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
-<span class="nc" id="L51">        return metadataProvider.getPokemonMetadata(index);</span>
-    }
-
+    /**
+     * Crée un Pokémon à partir des statistiques spécifiées.
+     * @param index l'index du Pokémon
+     * @param cp les points de combat du Pokémon
+     * @param hp les points de vie du Pokémon
+     * @param dust la poussière d'étoile nécessaire pour améliorer le Pokémon
+     * @param candy le nombre de bonbons nécessaire pour améliorer le Pokémon
+     * @return le Pokémon créé
+     */
     @Override
     public Pokemon createPokemon(int index, int cp, int hp, int dust, int candy) {
-<span class="nc" id="L56">        return pokemonFactory.createPokemon(index, cp, hp, dust, candy);</span>
+<span class="nc" id="L90">        return pokemonFactory.createPokemon(index, cp, hp, dust, candy);</span>
     }
+
+    /**
+     * Retourne les métadonnées du Pokémon correspondant à l'index spécifié.
+     * @param index l'index du Pokémon
+     * @return les métadonnées du Pokémon
+     * @throws PokedexException si l'index est invalide
+     */
+    @Override
+    public PokemonMetadata getPokemonMetadata(int index) throws PokedexException {
+<span class="nc" id="L101">        return metadataProvider.getPokemonMetadata(index);</span>
+    }
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
