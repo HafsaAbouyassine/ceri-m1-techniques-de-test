@@ -31,4 +31,10 @@ public class IPokemonTrainerFactoryTest {
         assertEquals(0, trainer.getPokedex().size());
     }
 
+    @Test
+    public void testCreateTrainerWithNullName() {
+        trainerFactory.createTrainer(null, Team.MYSTIC, pokedexFactory);
+    }
+
+
 }

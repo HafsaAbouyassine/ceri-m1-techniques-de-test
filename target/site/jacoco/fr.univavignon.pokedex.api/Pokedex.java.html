@@ -26,7 +26,7 @@ public class Pokedex implements IPokedex {
 
     @Override
     public Pokemon getPokemon(int id) throws PokedexException {
-<span class="pc bpc" id="L29" title="1 of 4 branches missed.">        if (id &lt; 0 || id &gt;= pokemons.size()) {</span>
+<span class="fc bfc" id="L29" title="All 4 branches covered.">        if (id &lt; 0 || id &gt;= pokemons.size()) {</span>
 <span class="fc" id="L30">            throw new PokedexException(&quot;ID invalide : &quot; + id);</span>
         }
 <span class="fc" id="L32">        return pokemons.get(id);</span>

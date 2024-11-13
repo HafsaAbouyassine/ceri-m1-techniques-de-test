@@ -55,4 +55,9 @@ public class IPokemonFactoryTest {
 
 
     }
+    @Test
+    public void testCreatePokemonWithInvalidValues() {
+        pokemonFactory.createPokemon(0, -613, -64, -4000, -4); // Ces valeurs sont invalides
+    }
+
 }

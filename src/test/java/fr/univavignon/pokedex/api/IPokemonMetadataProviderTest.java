@@ -56,4 +56,9 @@ public class IPokemonMetadataProviderTest {
         // Test pour un Pokémon inexistant, devrait lancer une PokedexException
         metadataProvider.getPokemonMetadata(999); // Index 999 n'existe pas
     }
+    @Test(expected = PokedexException.class)
+    public void testGetPokemonMetadataWithInvalidIndex() throws PokedexException {
+        metadataProvider.getPokemonMetadata(999); // Index inexistant
+    }
+
 }
