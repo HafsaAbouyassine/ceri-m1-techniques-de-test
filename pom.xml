@@ -73,6 +73,7 @@
        <inputFiles>
         <inputFile>target/checkstyle-result.xml</inputFile>
        </inputFiles>
+       <outputDir>${project.basedir}/badges</outputDir>
       </configuration>
      </execution>
     </executions>
