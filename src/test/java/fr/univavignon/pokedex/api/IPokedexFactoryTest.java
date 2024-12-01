@@ -25,6 +25,7 @@ public class IPokedexFactoryTest {
         // Assuming PokedexFactoryImpl is your real implementation of IPokedexFactory
         IPokedexFactory pokedexFactory = new PokedexFactory();
 
+
         // Créez un pokedex en utilisant la factory
         IPokedex pokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
 
