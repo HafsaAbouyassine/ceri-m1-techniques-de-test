@@ -24,6 +24,20 @@ jobs:
             echo "Uploading Jacoco report to Codecov"
             bash <(curl -s https://codecov.io/bash) -f target/site/jacoco/jacoco.xml -t $CODECOV_TOKEN -X verbose
             echo "Upload terminé"
+      - run:
+          name: Deploy Javadoc
+          command: |
+            mkdir -p gh-pages
+            cp -r target/site/apidocs/* gh-pages/
+            git config --global user.email "ci@example.com"
+            git config --global user.name "CircleCI"
+            git clone --branch gh-pages https://github.com/HafsaAbouyassine/ceri-m1-techniques-de-test.git gh-pages-repo
+            cp -r gh-pages/* gh-pages-repo/
+            cd gh-pages-repo
+            git add .
+            git commit -m "Update Javadoc"
+            git push origin gh-pages
+
 
 workflows:
   build-and-upload:
