@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Generate Javadoc
           command: |
-            cd badges && mvn javadoc:javadoc
+            mvn javadoc:javadoc
 
 
 workflows:
