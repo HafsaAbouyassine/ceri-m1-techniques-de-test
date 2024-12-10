@@ -33,7 +33,14 @@ jobs:
       # Deployment
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:CmuXAAUOtBw24KObf1iu6KIBh0bTsO5iMyepBRflALg"
+            - "SHA256:/CZUIgiVzYyt3i1DPw+5NTtvDwNkXeRyUOB37DFXTOQ"
+
+      - run:
+          name: Start SSH Agent
+          command: |
+            ssh-agent -s
+            ssh-add ~/.ssh/id_ed25519
+      
 
       - run:
           name: Install and configure gh-pages
