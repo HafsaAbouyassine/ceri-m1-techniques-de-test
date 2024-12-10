@@ -12,6 +12,8 @@
 - ![Checkstyle Badge](https://github.com/HafsaAbouyassine/ceri-m1-techniques-de-test/raw/master/badges/checkstyle-result.svg)
 - Lien Javadoc : [Consulter la Javadoc](https://hafsaabouyassine.github.io/ceri-m1-techniques-de-test/)
 
+
+
   
 ## Description du Projet
 Ce projet consiste en la création d'une API Pokedex en Java, permettant de manipuler des données de Pokémon telles que leurs caractéristiques et leur classement selon divers critères. L'objectif principal est d'implémenter une API qui fournit les informations nécessaires sur chaque Pokémon et de réaliser des tests pour assurer la qualité du code.
