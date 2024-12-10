@@ -36,11 +36,10 @@ jobs:
             - "SHA256:/CZUIgiVzYyt3i1DPw+5NTtvDwNkXeRyUOB37DFXTOQ"
 
       - run:
-          name: Start SSH Agent
-          command: |
-            ssh-agent -s
-            ssh-add ~/.ssh/id_ed25519
-      
+          name: Debug SSH Key Path
+          command: ls -la ~/.ssh
+
+
 
       - run:
           name: Install and configure gh-pages
