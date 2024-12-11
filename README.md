@@ -10,7 +10,7 @@
 - [![CircleCI](https://dl.circleci.com/status-badge/img/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/tree/master)
 - [![codecov](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test/graph/badge.svg?token=MFSONCTGBM)](https://codecov.io/gh/HafsaAbouyassine/ceri-m1-techniques-de-test)
 - ![Checkstyle Badge](https://github.com/HafsaAbouyassine/ceri-m1-techniques-de-test/raw/master/badges/checkstyle-result.svg)
-- Lien Javadoc : [Consulter la Javadoc](https://hafsaabouyassine.github.io/ceri-m1-techniques-de-test/)
+
 
 
 
@@ -49,3 +49,4 @@ Avec ces classes implémentées, les tests devraient reconnaître les symboles n
 - [Documentation Jacoco](https://www.jacoco.org/jacoco/)
 - [Documentation Codecov](https://docs.codecov.com/docs/quick-start)
 - [Documentation CircleCI](https://circleci.com/docs/)
+-  Lien Javadoc : [Consulter la Javadoc](https://hafsaabouyassine.github.io/ceri-m1-techniques-de-test/)
