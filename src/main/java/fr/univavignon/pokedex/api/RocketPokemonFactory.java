@@ -6,62 +6,45 @@ import java.util.Random;
 
 import org.apache.commons.collections4.map.UnmodifiableMap;
 
-import fr.univavignon.pokedex.api.IPokemonFactory;
-import fr.univavignon.pokedex.api.Pokemon;
-
 public class RocketPokemonFactory implements IPokemonFactory {
-	
+
 	private static Map<Integer, String> index2name;
 	static {
-		Map<Integer, String> aMap = new HashMap<Integer, String>();
-        aMap.put(-1, "Ash's Pikachu");
-        aMap.put(0, "MISSINGNO");
-        aMap.put(1, "Bulbasaur");
-        //TODO : Gotta map them all !
-        index2name = UnmodifiableMap.unmodifiableMap(aMap);
+		Map<Integer, String> aMap = new HashMap<>();
+		aMap.put(-1, "Ash's Pikachu");
+		aMap.put(0, "MISSINGNO");
+		aMap.put(1, "Bulbasaur");
+		aMap.put(133, "Aquali");
+		index2name = UnmodifiableMap.unmodifiableMap(aMap);
 	}
-	
-	public static int generateRandomStat() {
-		int total = 0;
-		for(int i=0; i < 1000000; i++)
-		{
-			Random rn = new Random();
-		    int r = rn.nextInt(2);
-		    total = total + r;
-		}
-		return total / 10000;
+
+	private static int generateRandomStat() {
+		return new Random().nextInt(16);
 	}
 
 	@Override
 	public Pokemon createPokemon(int index, int cp, int hp, int dust, int candy) {
-		String name;
-		if(!index2name.containsKey(index)) {
-			name = index2name.get(0);
-		} else {
-			name = index2name.get(index);
+		// Vérification des valeurs invalides
+		if (cp <= 0 || hp <= 0 || dust < 0 || candy < 0) {
+			return null; // Retourne null pour les valeurs invalides
 		}
-		int attack;
-		int defense;
-		int stamina;
+
+		String name = index2name.getOrDefault(index, index2name.get(0)); // Utilise MISSINGNO si l'index n'existe pas
+		int attack, defense, stamina;
 		double iv;
-		if (index == -1) { // Cas spécifique pour Ash's Pikachu
-			attack = 1000;
-			defense = 1000;
-			stamina = 1000;
-			iv = 0;
-		} else if (index == 0) { // Cas spécifique pour MISSINGNO
+
+		if (index < 0) {
 			attack = 1000;
 			defense = 1000;
 			stamina = 1000;
 			iv = 0;
 		} else {
-			// Générer des statistiques aléatoires pour les autres indices
-			attack = RocketPokemonFactory.generateRandomStat();
-			defense = RocketPokemonFactory.generateRandomStat();
-			stamina = RocketPokemonFactory.generateRandomStat();
+			attack = generateRandomStat();
+			defense = generateRandomStat();
+			stamina = generateRandomStat();
 			iv = 1;
 		}
+
 		return new Pokemon(index, name, attack, defense, stamina, cp, hp, dust, candy, iv);
 	}
-
 }
