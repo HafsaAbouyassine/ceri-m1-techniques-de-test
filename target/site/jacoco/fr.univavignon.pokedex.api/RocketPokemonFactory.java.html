@@ -18,7 +18,7 @@ import org.apache.commons.collections4.map.UnmodifiableMap;
 <span class="fc" id="L18">		index2name = UnmodifiableMap.unmodifiableMap(aMap);</span>
 <span class="fc" id="L19">	}</span>
 
-	private static int generateRandomStat() {
+	static int generateRandomStat() {
 <span class="fc" id="L22">		return new Random().nextInt(16);</span>
 	}
 
@@ -33,11 +33,11 @@ import org.apache.commons.collections4.map.UnmodifiableMap;
 		int attack, defense, stamina;
 		double iv;
 
-<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (index &lt; 0) {</span>
-<span class="fc" id="L37">			attack = 1000;</span>
-<span class="fc" id="L38">			defense = 1000;</span>
-<span class="fc" id="L39">			stamina = 1000;</span>
-<span class="fc" id="L40">			iv = 0;</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">		if (index &lt; 0) {</span>
+<span class="nc" id="L37">			attack = 1000;</span>
+<span class="nc" id="L38">			defense = 1000;</span>
+<span class="nc" id="L39">			stamina = 1000;</span>
+<span class="nc" id="L40">			iv = 0;</span>
 		} else {
 <span class="fc" id="L42">			attack = generateRandomStat();</span>
 <span class="fc" id="L43">			defense = generateRandomStat();</span>

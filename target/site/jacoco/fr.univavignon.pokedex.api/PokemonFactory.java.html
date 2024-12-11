@@ -18,9 +18,9 @@ public class PokemonFactory implements IPokemonFactory  {
 <span class="fc" id="L18">            double iv = calculateIV(cp, hp, dust, candy);</span>
 
 <span class="fc" id="L20">            return new Pokemon(index,  metadata.getName(), metadata.getAttack(), metadata.getDefense(), metadata.getStamina(), cp, hp, dust, candy, iv);</span>
-<span class="nc" id="L21">        } catch (PokedexException e) {</span>
-<span class="nc" id="L22">            System.err.println(&quot;Erreur lors de la récupération des métadonnées du Pokémon : &quot; + e.getMessage());</span>
-<span class="nc" id="L23">            return null;</span>
+<span class="fc" id="L21">        } catch (PokedexException e) {</span>
+<span class="fc" id="L22">            System.err.println(&quot;Erreur lors de la récupération des métadonnées du Pokémon : &quot; + e.getMessage());</span>
+<span class="fc" id="L23">            return null;</span>
         }
     }
 

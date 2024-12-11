@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class IPokemonFactoryTest {
 
@@ -75,5 +77,62 @@ public class IPokemonFactoryTest {
 
         Pokemon invalidPokemon5 = rocketFactory.createPokemon(1, 100, 100, 100, -1);
         assertNull("Expected null for invalid candy", invalidPokemon5);
+    }
+
+    @Test
+    public void testCreatePokemonWithNonExistentIndex() {
+        // Test avec un index non existant dans les métadonnées
+        Pokemon pokemon = rocketFactory.createPokemon(999, 500, 50, 5000, 10);
+
+        assertNotNull("Pokemon should be created with MISSINGNO name", pokemon);
+        assertEquals("MISSINGNO", pokemon.getName());
+        assertEquals(999, pokemon.getIndex());
+    }
+
+    @Test
+    public void testCreatePokemonWithMaxStats() {
+        // Test avec des valeurs maximales pour CP, HP, dust et candy
+        int maxCp = 10000;
+        int maxHp = 10000;
+        int maxDust = 10000;
+        int maxCandy = 1000;
+
+        Pokemon pokemon = rocketFactory.createPokemon(1, maxCp, maxHp, maxDust, maxCandy);
+
+        assertNotNull(pokemon);
+        assertEquals(maxCp, pokemon.getCp());
+        assertEquals(maxHp, pokemon.getHp());
+        assertEquals(maxDust, pokemon.getDust());
+        assertEquals(maxCandy, pokemon.getCandy());
+    }
+
+    @Test
+    public void testCreatePokemonWithMinStats() {
+        // Test avec des valeurs minimales pour CP, HP, dust et candy
+        int minCp = 1;
+        int minHp = 1;
+        int minDust = 1;
+        int minCandy = 1;
+
+        Pokemon pokemon = rocketFactory.createPokemon(1, minCp, minHp, minDust, minCandy);
+
+        assertNotNull(pokemon);
+        assertEquals(minCp, pokemon.getCp());
+        assertEquals(minHp, pokemon.getHp());
+        assertEquals(minDust, pokemon.getDust());
+        assertEquals(minCandy, pokemon.getCandy());
+    }
+
+
+    @Test
+    public void testCreatePokemonWithErrorInMetadataProvider() throws PokedexException {
+        // Mock du PokemonMetadataProvider pour simuler une erreur
+        IPokemonMetadataProvider mockProvider = mock(IPokemonMetadataProvider.class);
+        when(mockProvider.getPokemonMetadata(1)).thenThrow(new PokedexException("Metadata error"));
+
+        IPokemonFactory factoryWithError = new PokemonFactory(mockProvider);
+
+        Pokemon pokemon = factoryWithError.createPokemon(1, 100, 100, 1000, 10);
+        assertNull("Pokemon creation should fail with exception in metadata provider", pokemon);
     }
 }
