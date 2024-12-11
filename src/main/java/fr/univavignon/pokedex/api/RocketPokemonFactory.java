@@ -44,12 +44,18 @@ public class RocketPokemonFactory implements IPokemonFactory {
 		int defense;
 		int stamina;
 		double iv;
-		if(index < 0) {
+		if (index == -1) { // Cas spécifique pour Ash's Pikachu
+			attack = 1000;
+			defense = 1000;
+			stamina = 1000;
+			iv = 0;
+		} else if (index == 0) { // Cas spécifique pour MISSINGNO
 			attack = 1000;
 			defense = 1000;
 			stamina = 1000;
 			iv = 0;
 		} else {
+			// Générer des statistiques aléatoires pour les autres indices
 			attack = RocketPokemonFactory.generateRandomStat();
 			defense = RocketPokemonFactory.generateRandomStat();
 			stamina = RocketPokemonFactory.generateRandomStat();

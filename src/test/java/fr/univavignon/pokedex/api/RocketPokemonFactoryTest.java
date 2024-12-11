@@ -30,6 +30,8 @@ public class RocketPokemonFactoryTest {
         // Test du cas où l'indice est 0 (MISSINGNO)
         Pokemon pokemon = rocketPokemonFactory.createPokemon(0, 1000, 1000, 1000, 1000);
 
+
+
         assertNotNull("MISSINGNO ne doit pas être null", pokemon);
         assertEquals("Nom incorrect", "MISSINGNO", pokemon.getName());
         assertEquals("Statistiques incorrectes pour MISSINGNO", 1000, pokemon.getAttack());
