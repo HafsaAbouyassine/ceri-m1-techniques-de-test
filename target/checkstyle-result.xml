@@ -506,6 +506,7 @@
 <error line="23" column="1" severity="warning" message="La ligne contient un caractère tabulation." source="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck"/>
 <error line="24" column="1" severity="warning" message="La ligne contient un caractère tabulation." source="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck"/>
 <error line="24" column="9" severity="warning" message="&apos;method def modifier&apos; au niveau d&apos;indentation 8 n&apos;est pas indenté correctement, le niveau attendu est 2." source="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck"/>
+<error line="24" column="9" severity="warning" message="Commentaire Javadoc manquant." source="com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck"/>
 <error line="25" column="1" severity="warning" message="La ligne contient un caractère tabulation." source="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck"/>
 <error line="25" column="17" severity="warning" message="Le fils de &apos;method def&apos; au niveau d&apos;indentation 16 n&apos;est pas indenté correctement, le niveau attendu est 4." source="com.puppycrawl.tools.checkstyle.checks.indentation.IndentationCheck"/>
 <error line="26" column="1" severity="warning" message="La ligne contient un caractère tabulation." source="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck"/>
