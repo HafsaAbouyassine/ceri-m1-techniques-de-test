@@ -135,4 +135,30 @@ public class IPokemonFactoryTest {
         Pokemon pokemon = factoryWithError.createPokemon(1, 100, 100, 1000, 10);
         assertNull("Pokemon creation should fail with exception in metadata provider", pokemon);
     }
+    @Test
+    public void testCreateDuplicatePokemon() {
+        // Test pour vérifier la création de plusieurs Pokémon avec le même index
+        Pokemon pokemon1 = pokemonFactory.createPokemon(0, 500, 50, 5000, 10);
+        Pokemon pokemon2 = pokemonFactory.createPokemon(0, 600, 60, 6000, 20);
+
+        assertNotNull(pokemon1);
+        assertNotNull(pokemon2);
+        assertEquals(0, pokemon1.getIndex());
+        assertEquals(0, pokemon2.getIndex());
+        assertNotEquals(pokemon1.getCp(), pokemon2.getCp()); // Vérifier que CP est différent
+        assertNotEquals(pokemon1.getHp(), pokemon2.getHp()); // Vérifier que HP est différent
+    }
+    @Test
+    public void testCreatePokemonWithCustomName() {
+        // Test de la création de Pokémon avec un nom personnalisé (comme Ash's Pikachu)
+        Pokemon pokemon = rocketFactory.createPokemon(-1, 1000, 100, 1000, 10);
+
+        assertNotNull(pokemon);
+        assertEquals("Ash's Pikachu", pokemon.getName());
+        assertEquals(-1, pokemon.getIndex());
+        assertEquals(1000, pokemon.getCp());
+        assertEquals(100, pokemon.getHp());
+        assertEquals(1000, pokemon.getDust());
+        assertEquals(10, pokemon.getCandy());
+    }
 }
